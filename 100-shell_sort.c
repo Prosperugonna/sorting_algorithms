@@ -1,37 +1,34 @@
 #include "sort.h"
+
+void insertion_sort(int *, long int, long int, size_t);
+
 /**
- * shell_sort - shell sort algorithm
- * @array: the array
- * @size: the size of the array
- *
- * Description: using the knuth sequence
- */
+* shell_sort - shell sort algorithm
+*
+* @array: array to sort
+* @size: size of array
+*/
 void shell_sort(int *array, size_t size)
 {
-	size_t i, j;
-	int item;
-	size_t gap = 1;
+	long int n = 1;
+	long int i, k, tmp;
 
-	if (array == NULL || size < 2)
-	{
+	if (size < 2)
 		return;
-	}
-	while (gap < (size / 3))
+
+	while (n < (long int)size / 3)
+		n = n * 3 + 1;
+
+	while (n > 0)
 	{
-		gap = gap * 3 + 1;
-	}
-	while (gap >= 1)
-	{
-		for (i = gap; i < size; i++)
+		for (i = n; i < (long int) size; i++)
 		{
-			for (j = i; j >= gap && array[gap] < array[j - gap]; j -= gap)
-			{
-				item = array[j];
-				array[j] = array[j - gap];
-				array[j - gap] = item;
-			}
+			tmp = array[i];
+			for (k = i; k >= n && array[k - n] > tmp; k = k - n)
+				array[k] = array[k - n];
+			array[k] = tmp;
 		}
-		gap = gap / 3;
 		print_array(array, size);
+		n = (n - 1) / 3;
 	}
 }
